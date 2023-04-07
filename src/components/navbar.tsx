@@ -42,15 +42,15 @@ const Navbar = () => {
     return (
         <div>
             <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200' />
-            <AppBar position='static' sx={{ background: 'linear-gradient(90deg, rgba(17,45,78,1) 0%, rgba(63,114,175,1) 100%)' }}>
+            <AppBar position='fixed' sx={{ background: 'linear-gradient(90deg, rgba(17,45,78,1) 0%, rgba(63,114,175,1) 100%)', opacity: '0.9', height: '100px', justifyContent: 'center' }}>
                 <Toolbar>
-                    <IconButton edge='start' color='inherit' aria-label='menu' size='large' sx={{ mr: '3px' }}>
+                    <IconButton edge='start' color='inherit' aria-label='menu' size='large' sx={{ mr: '3px', ml: '5px' }} href='/'>
                         <span className='material-symbols-outlined' style={{ fontSize: 30 }}>
                             mms
                         </span>
                     </IconButton>
                     <ThemeProvider theme={theme}>
-                        <Typography variant='h6' className='navbarTypography' sx={{ fontSize: '30px', position: 'relative', bottom: '1px', letterSpacing: '0.0.7rem' }}>
+                        <Typography variant='h6' className='navbarTypography' sx={{ fontSize: '30px', position: 'relative', bottom: '1px', letterSpacing: '0.0.7rem', pointerEvents: 'none' }}>
                             Chat<span>Mate</span>
                         </Typography>
                     </ThemeProvider>
@@ -73,8 +73,8 @@ const Navbar = () => {
                             <Button color='inherit' sx={{ fontSize: 22, textTransform: 'none', fontFamily: 'Nunito' }} href='/chat'>
                                 Chat
                             </Button>
-                            <Button color='inherit' sx={{ fontSize: 22, textTransform: 'none', fontFamily: 'Nunito' }} href='/about'>
-                                About
+                            <Button color='inherit' sx={{ fontSize: 22, textTransform: 'none', fontFamily: 'Nunito' }} href='/signup'>
+                                Sign Up
                             </Button>
                             <Button color='inherit' sx={{ fontSize: 22, textTransform: 'none', fontFamily: 'Nunito' }} href='/login'>
                                 Login
@@ -95,8 +95,8 @@ const Navbar = () => {
                             </Button>
                         </MenuItem>
                         <MenuItem sx={{ justifyContent: 'center' }}>
-                            <Button color='inherit' sx={{ fontSize: 22, textTransform: 'none', fontFamily: 'Nunito' }} href='/about'>
-                                About
+                            <Button color='inherit' sx={{ fontSize: 22, textTransform: 'none', fontFamily: 'Nunito' }} href='/signup'>
+                                Sign Up
                             </Button>
                         </MenuItem>
                         <MenuItem sx={{ justifyContent: 'center' }}>
