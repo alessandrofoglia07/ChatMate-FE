@@ -94,6 +94,18 @@ Color palette:
         top: 1700px;
         right: 5vw;
     }
+
+    .accessForms {
+        width: 90vw;
+        height: 70vh;
+        font-size: 30rem;
+        animation: fadeIn1 0.5s;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: linear-gradient(75deg, #3F72AF 0%, #112D4E 100%);
+    }
 }
 
 @media only screen and (min-width: 1100px) {
@@ -113,6 +125,21 @@ Color palette:
         position: absolute;
         top: 1650px;
         right: 15vw;
+    }
+
+    .accessForms {
+        animation: fadeIn1 0.5s;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 35svw;
+        width: 35vw;
+        min-width: 300px;
+        height: 70svh;
+        height: 70vh;
+        min-height: 640px;
+        background: linear-gradient(75deg, #3F72AF 0%, #112D4E 100%);
     }
 }
 
@@ -149,5 +176,70 @@ Color palette:
 
     100% {
         opacity: 1;
+    }
+}
+
+@keyframes fadeIn1 {
+    0% {
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@media only screen and (min-height: 300px) {
+    .custom-shape-divider-bottom-1679680709 {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        overflow: hidden;
+        line-height: 0;
+        transform: rotate(180deg);
+    }
+
+    .custom-shape-divider-bottom-1679680709 svg {
+        position: relative;
+        display: block;
+        width: calc(100% + 1.3px);
+        height: 15vh;
+    }
+
+    .custom-shape-divider-bottom-1679680709 .shape-fill {
+        fill: #3F72AF;
+    }
+}
+
+@media only screen and (max-height: 700px) {
+    .custom-shape-divider-bottom-1679680709 {
+        content-visibility: hidden;
+    }
+
+    .custom-shape-divider-bottom-1679680709 svg {
+        content-visibility: hidden;
+    }
+
+    .custom-shape-divider-bottom-1679680709 .shape-fill {
+        content-visibility: hidden;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .custom-shape-divider-bottom-1679680709 {
+        content-visibility: hidden;
+    }
+
+    .custom-shape-divider-bottom-1679680709 svg {
+        content-visibility: hidden;
+    }
+
+    .custom-shape-divider-bottom-1679680709 .shape-fill {
+        content-visibility: hidden;
     }
 }

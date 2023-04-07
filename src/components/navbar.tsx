@@ -107,6 +107,9 @@ const Navbar = () => {
                     </Menu>
                 </Toolbar>
             </AppBar>
+            <br />
+            <br />
+            <br />
         </div>
     );
 };
