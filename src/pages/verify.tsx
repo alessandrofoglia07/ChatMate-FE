@@ -10,6 +10,7 @@ const VerifyPage = () => {
     const [verificationResult, setVerificationResult] = useState<any>(null);
     const [fontSize, setFontSize] = useState(100);
     const [width, setWidth] = useState(window.innerWidth);
+    const [verified, setVerified] = useState(false);
 
     useEffect(() => {
         const handleResize = () => {
@@ -34,14 +35,24 @@ const VerifyPage = () => {
         const verifyEmail = async () => {
             try {
                 const res = await axios.get(`http://localhost:5000/api/verify/${token}`);
-                setVerificationResult(res.data);
+                if (!verificationResult || verificationResult == null) {
+                    setVerificationResult(res.data);
+                } else {
+                    return;
+                }
             } catch (err: any) {
-                setVerificationResult(err.message);
+                if (!verificationResult || verificationResult == null) {
+                    setVerificationResult(err.message);
+                } else {
+                    return;
+                }
             }
         };
 
-        verifyEmail();
-    }, [token]);
+        if (verificationResult == null) {
+            verifyEmail();
+        }
+    });
 
     return (
         <div>
