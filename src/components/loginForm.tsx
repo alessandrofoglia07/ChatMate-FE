@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Paper, Typography, Stack, TextField, Button, Link, IconButton, Snackbar, Alert } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
-import Axios from 'axios';
+import axios from 'axios';
 import { useSignIn, useAuthUser } from 'react-auth-kit';
 import { useNavigate } from 'react-router-dom';
 
@@ -70,39 +70,28 @@ export const LoginForm = () => {
         setInputs((inputs) => ({ ...inputs, [event.target.name]: event.target.value }));
     };
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // TODO - add validation for email and password
-        /*
+        const res = await axios.post('http://localhost:5000/api/auth/login', inputs);
         if (res.data.message === 'Login successful') {
-                console.log('%cAxios: Login successful', 'color: cyan');
-                if (
-                    signIn({
-                        token: res.data.token,
-                        expiresIn: 28800,
-                        tokenType: 'Bearer',
-                        authState: {
-                            id: res.data.id,
-                            email: res.data.email,
-                            username: res.data.username
-                        }
-                    })
-                ) {
-                    navigate('/profile');
-                } else {
-                    console.error('Error: Failed to sign in');
+            signIn({
+                token: res.data.token,
+                tokenType: 'Bearer',
+                expiresIn: 28800,
+                authState: {
+                    id: res.data.id,
+                    email: res.data.email,
+                    username: res.data.username
                 }
-            } else if (res.data.message === 'Incorrect password') {
-                console.log('%cAxios: Incorrect password', 'color: cyan');
-                setIncorrectPwdError(true);
-            } else if (res.data.message === 'Email is not registered or email is not verified') {
-                console.log('%cAxios: Email is not registered', 'color: cyan');
-                setEmailNotRegisteredError(true);
-            } else if (res.status === 500) {
-                console.log('%cAxios: Server error', 'color: cyan');
-                setServerError(true);
-            }
-        */
+            });
+            navigate('/chat');
+        } else if (res.data.message === 'Incorrect password') {
+            setIncorrectPwdError(true);
+        } else if (res.data.message === 'Email not registered') {
+            setEmailNotRegisteredError(true);
+        } else {
+            setServerError(true);
+        }
     };
 
     const handleAlertClose = () => {

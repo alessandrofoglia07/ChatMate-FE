@@ -189,7 +189,7 @@ export const SignUpForm = () => {
             </Snackbar>
             <Snackbar open={signupSuccess} autoHideDuration={2000} onClose={handleErrorAlertClose}>
                 <Alert severity='success' variant='filled' onClose={handleErrorAlertClose}>
-                    Sign up successful. You will receive a verification email soon.
+                    Sign up successful. You will receive a confirmation email soon.
                 </Alert>
             </Snackbar>
         </div>

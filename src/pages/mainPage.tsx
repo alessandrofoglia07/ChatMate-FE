@@ -76,14 +76,15 @@ const MainPage = () => {
         const element = document.getElementById('typography1');
         const scrollFunction = () => {
             const y = window.scrollY;
-            if (y >= 0 && (element!.classList.contains('hide') || element!.classList.contains('show'))) {
+            if (y >= 0 && (element!.classList.contains('hide') || element!.classList.contains('show1'))) {
                 element!.classList.remove('hide');
-                element!.classList.add('show');
-            } else if (y <= 0 && element!.classList.contains('show')) {
+                element!.classList.add('show1');
+            } else if (y <= 0 && element!.classList.contains('show1')) {
                 return;
             }
         };
         window.addEventListener('scroll', scrollFunction);
+        scrollFunction();
     }, []);
 
     useEffect(() => {
@@ -184,7 +185,7 @@ const MainPage = () => {
         <div id='main-page'>
             <Navbar />
             <div id='1'>
-                <Typography variant='h1' id='typography1' className='mainPageTitle' sx={{ fontFamily: 'Nunito', fontSize: handleFontSizes() }}>
+                <Typography variant='h1' id='typography1' className='mainPageTitle hide' sx={{ fontFamily: 'Nunito', fontSize: handleFontSizes() }}>
                     <b>
                         Chat now. <br />
                         <span style={{ marginLeft: '100px' }}>
