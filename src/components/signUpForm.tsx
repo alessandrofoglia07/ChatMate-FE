@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Paper, Typography, Stack, TextField, Button, Link, Alert, Snackbar, IconButton } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
-import Axios from 'axios';
+import axios from 'axios';
 
 const InputTextField = styled(TextField)({
     '& .MuiInputBase-input': {
@@ -73,20 +73,19 @@ export const SignUpForm = () => {
         window.addEventListener('resize', handleResize);
     });
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // TODO - add axios call
-        /*
+        const res = await axios.post('http://localhost:5000/api/signup', inputs);
         if (res.data.message === 'Email is already registered') {
-                console.log('%cAxios: Email already exists', 'color: cyan');
-                setSignupError(true);
-            } else if (res.data.message === 'User created') {
-                console.log('%cAxios: Account created', 'color: cyan');
-                setSignupSuccess(true);
-            } else if (res.status === 500) {
-                console.log('Server error');
-            }
-        */
+            console.log('%cAxios: Email already exists', 'color: cyan');
+            setSignupError(true);
+        } else if (res.data.message === 'User created') {
+            console.log('%cAxios: Account created', 'color: cyan');
+            setSignupSuccess(true);
+        } else if (res.status === 500) {
+            console.log('Server error');
+            alert('Server error');
+        }
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -158,9 +158,25 @@ const MainPage = () => {
 
     const handleFontSizes = () => {
         if (smallerScreen) {
-            return '4rem';
+            return '3.5rem';
         } else {
             return '8rem';
+        }
+    };
+
+    const marginLeft3Handler = (selector: string) => {
+        if (selector === 'first') {
+            if (smallerScreen) {
+                return '0px';
+            } else {
+                return '150px';
+            }
+        } else if (selector === 'second') {
+            if (smallerScreen) {
+                return '0px';
+            } else {
+                return '300px';
+            }
         }
     };
 
@@ -203,9 +219,9 @@ const MainPage = () => {
                 <Typography variant='h1' id='typography3' className='hide mainPageTitle3' sx={{ fontFamily: 'Nunito', fontSize: handleFontSizes() }}>
                     <b>
                         <i>Open source.</i> <br />
-                        <span style={{ marginLeft: '150px' }}>
+                        <span style={{ marginLeft: marginLeft3Handler('first') }}>
                             <i>
-                                Encrypted. <br /> <span style={{ marginLeft: '300px' }}>Forever.</span>
+                                Encrypted. <br /> <span style={{ marginLeft: marginLeft3Handler('second') }}>Forever.</span>
                             </i>
                         </span>
                     </b>
