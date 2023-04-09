@@ -10,7 +10,6 @@ const VerifyPage = () => {
     const [verificationResult, setVerificationResult] = useState<any>(null);
     const [fontSize, setFontSize] = useState(100);
     const [width, setWidth] = useState(window.innerWidth);
-    const [verified, setVerified] = useState(false);
 
     useEffect(() => {
         const handleResize = () => {

@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { AppBar, Toolbar, IconButton, Typography, Stack, createTheme, ThemeProvider, Button, Menu, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import React, { useState, useEffect } from 'react';
+import { useAuthUser } from 'react-auth-kit';
 
 const theme = createTheme({
     typography: {
@@ -15,6 +15,8 @@ const Navbar = () => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
 
+    const auth = useAuthUser();
+
     const handleResize = () => {
         setWidth(window.innerWidth);
     };
@@ -25,6 +27,18 @@ const Navbar = () => {
 
     const handleCloseMenu = () => {
         setAnchorEl(null);
+    };
+
+    const handleLoginText = () => {
+        if (auth()) {
+            if (auth()?.username.length > 5) {
+                return auth()?.username.substring(0, 5) + '...';
+            } else {
+                return auth()?.username;
+            }
+        } else {
+            return 'Login';
+        }
     };
 
     useEffect(() => {
@@ -42,7 +56,7 @@ const Navbar = () => {
     return (
         <div>
             <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200' />
-            <AppBar position='fixed' sx={{ background: 'linear-gradient(90deg, rgba(17,45,78,1) 0%, rgba(63,114,175,1) 100%)', opacity: '0.9', height: '100px', justifyContent: 'center' }}>
+            <AppBar position='fixed' sx={{ background: 'linear-gradient(90deg, rgba(17,45,78,1) 0%, rgba(63,114,175,1) 100%)', height: '100px', justifyContent: 'center' }}>
                 <Toolbar>
                     <IconButton edge='start' color='inherit' aria-label='menu' size='large' sx={{ mr: '3px', ml: '5px' }} href='/'>
                         <span className='material-symbols-outlined' style={{ fontSize: 30 }}>
@@ -77,7 +91,7 @@ const Navbar = () => {
                                 Sign Up
                             </Button>
                             <Button color='inherit' sx={{ fontSize: 22, textTransform: 'none', fontFamily: 'Nunito' }} href='/login'>
-                                Login
+                                {handleLoginText()}
                             </Button>
                         </Stack>
                     )}
@@ -101,7 +115,7 @@ const Navbar = () => {
                         </MenuItem>
                         <MenuItem sx={{ justifyContent: 'center' }}>
                             <Button color='inherit' sx={{ fontSize: 22, textTransform: 'none', fontFamily: 'Nunito' }} href='/login'>
-                                Login
+                                {handleLoginText()}
                             </Button>
                         </MenuItem>
                     </Menu>

@@ -1,0 +1,4 @@
+Max n of users in a room: 10
+Max n of chars in a message: 100
+Max n of chars in a username: 13
+Max n of chars in a room name: 13

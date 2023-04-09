@@ -72,7 +72,7 @@ export const LoginForm = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const res = await axios.post('http://localhost:5000/api/auth/login', inputs);
+        const res = await axios.post('http://localhost:5000/api/login', inputs);
         if (res.data.message === 'Login successful') {
             signIn({
                 token: res.data.token,
