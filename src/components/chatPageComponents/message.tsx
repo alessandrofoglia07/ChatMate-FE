@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React, { useState, useEffect } from 'react';
 import { Box, Typography, Stack } from '@mui/material';
 import { useAuthUser } from 'react-auth-kit';

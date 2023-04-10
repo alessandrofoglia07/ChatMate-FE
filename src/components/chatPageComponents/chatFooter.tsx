@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
 import { Box, TextField, IconButton } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
+import { useAuthUser } from 'react-auth-kit';
 
-const ChatFooter = () => {
+const ChatFooter = (props: { socket: any; room: string }) => {
+    const auth = useAuthUser();
+
     const [message, SetMessage] = useState('');
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        const username = auth()?.username;
+        const { socket, room } = props;
+        if (message === '') return;
         SetMessage('');
-        // do something with the message
+        socket.emit('send_message', { username, room, message });
     };
 
     return (

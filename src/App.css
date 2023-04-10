@@ -158,7 +158,6 @@ Color palette:
 
 .row {
     position: relative;
-    background-color: red;
     width: calc(100vw - 405px);
     height: auto;
     margin-bottom: 50px;

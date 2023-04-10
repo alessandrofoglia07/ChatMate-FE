@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Typography, Stack, Paper, IconButton, TextField, Button } from '@mui/material';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { Typography, Stack, Paper, TextField, Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { useAuthUser } from 'react-auth-kit';
+import { useAuthUser, useSignOut } from 'react-auth-kit';
 
 const InputTextField = styled(TextField)({
     '& .MuiInputBase-input': {
@@ -23,16 +22,19 @@ const InputTextField = styled(TextField)({
 });
 
 interface Props {
-    onSubmit: (roomID: string, password: string) => void;
+    onSubmit: (roomID: string) => void;
+    socket: any;
 }
 
 const JoiningMenu = (props: Props) => {
+    const signOut = useSignOut();
     const auth = useAuthUser();
+
     const [elevation, setElevation] = useState(12);
     const [roomID, setRoomID] = useState('');
     const [width, setWidth] = useState(window.innerWidth);
-    const [password, setPassword] = useState('');
-    const [showPassword, setShowPassword] = useState(false);
+
+    const socket = props.socket;
 
     useEffect(() => {
         const form = document.getElementById('paper');
@@ -45,10 +47,16 @@ const JoiningMenu = (props: Props) => {
             });
         }
     }, []);
+
     const handleSubmit = () => {
-        if (roomID && password) {
-            props.onSubmit(roomID, password);
+        if (roomID) {
+            props.onSubmit(roomID);
         }
+    };
+
+    const handleLogOut = () => {
+        signOut();
+        socket.emit('logout');
     };
 
     const handleWidthChange = () => {
@@ -65,6 +73,12 @@ const JoiningMenu = (props: Props) => {
         };
         window.addEventListener('resize', handleResize);
     });
+
+    useEffect(() => {
+        socket.on('room_full', () => {
+            alert('Room is full');
+        });
+    }, [socket]);
 
     return (
         <div>
@@ -90,34 +104,11 @@ const JoiningMenu = (props: Props) => {
                                 InputLabelProps={{ style: { color: 'white', fontSize: 26 } }}
                                 sx={{ width: handleWidthChange() }}
                             />
-                            <InputTextField
-                                name='password'
-                                value={password}
-                                variant='standard'
-                                label='Password'
-                                type={showPassword ? 'text' : 'password'}
-                                color='primary'
-                                size='medium'
-                                onChange={(e) => {
-                                    setPassword(e.target.value);
-                                }}
-                                InputProps={{
-                                    style: { color: 'white', fontSize: 30, height: '60px' },
-                                    endAdornment: (
-                                        <IconButton
-                                            sx={{ color: 'white' }}
-                                            onClick={() => {
-                                                setShowPassword(!showPassword);
-                                            }}>
-                                            {showPassword ? <Visibility fontSize='large' /> : <VisibilityOff fontSize='large' />}{' '}
-                                        </IconButton>
-                                    )
-                                }}
-                                InputLabelProps={{ style: { color: 'white', fontSize: 26 } }}
-                                sx={{ width: handleWidthChange() }}
-                            />
-                            <Button type='submit' variant='text' sx={{ fontSize: '2rem', height: '80px', width: '160px', color: 'white', position: 'relative', top: '2vh' }} className='btnSubmit'>
+                            <Button type='submit' variant='text' sx={{ fontSize: '2.5rem', height: '80px', width: '160px', color: 'white', position: 'relative', top: '2.5vh' }} className='btnSubmit'>
                                 Submit
+                            </Button>
+                            <Button variant='text' sx={{ fontSize: '1.5rem', height: '50px', width: '120px', color: 'white', position: 'relative', top: '1vh' }} className='btnSubmit' onClick={handleLogOut}>
+                                Log out
                             </Button>
                         </Stack>
                     </form>

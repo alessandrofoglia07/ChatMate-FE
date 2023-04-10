@@ -1,7 +1,19 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Stack, Typography } from '@mui/material';
 
-const ChatBar = (props: { room: string }) => {
+const ChatBar = (props: { room: string; socket: any; onLeave: (room: string) => void }) => {
+    const { socket } = props;
+
+    const [roomUsers, setRoomUsers] = useState<any[]>([]);
+
+    useEffect(() => {
+        socket.on('chatroom_users', (data: any) => {
+            setRoomUsers(data);
+        });
+
+        return () => socket.off('room_users');
+    }, [socket]);
+
     return (
         <div className='chat-bar'>
             <Box width='100%' height='100%'>
@@ -9,15 +21,11 @@ const ChatBar = (props: { room: string }) => {
                     {props.room}
                 </Typography>
                 <Stack>
-                    <Typography variant='h4' sx={{ color: 'white', mt: '30px', ml: '5px', fontFamily: 'Nunito' }}>
-                        User 1
-                    </Typography>
-                    <Typography variant='h4' sx={{ color: 'white', mt: '30px', ml: '5px', fontFamily: 'Nunito' }}>
-                        User 2
-                    </Typography>
-                    <Typography variant='h4' sx={{ color: 'white', mt: '30px', ml: '5px', fontFamily: 'Nunito' }}>
-                        User 3
-                    </Typography>
+                    {roomUsers.map((user) => (
+                        <Typography variant='h4' sx={{ color: 'white', mt: '30px', ml: '5px', fontFamily: 'Nunito' }}>
+                            {user.username}
+                        </Typography>
+                    ))}
                 </Stack>
             </Box>
         </div>
