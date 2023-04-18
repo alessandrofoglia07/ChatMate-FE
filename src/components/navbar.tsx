@@ -2,6 +2,7 @@ import { AppBar, Toolbar, IconButton, Typography, Stack, createTheme, ThemeProvi
 import MenuIcon from '@mui/icons-material/Menu';
 import React, { useState, useEffect } from 'react';
 import { useAuthUser } from 'react-auth-kit';
+import { useNavigate } from 'react-router-dom';
 
 const theme = createTheme({
     typography: {
@@ -9,13 +10,15 @@ const theme = createTheme({
     }
 });
 
-const Navbar = () => {
+const Navbar = (props?: { socket?: any; room?: string }) => {
     const [width, setWidth] = useState(window.innerWidth);
     const [smallerScreen, setSmallerScreen] = useState(false);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
+    const [socket, setSocket] = useState<any>();
 
     const auth = useAuthUser();
+    const navigate = useNavigate();
 
     const handleResize = () => {
         setWidth(window.innerWidth);
@@ -52,6 +55,26 @@ const Navbar = () => {
             setSmallerScreen(false);
         }
     }, [width]);
+
+    useEffect(() => {
+        if (props) {
+            setSocket(props.socket);
+        } else {
+            setSocket(null);
+        }
+    }, [props]);
+
+    const handleChatBtnClick = () => {
+        const username = auth()?.username;
+        const room = props?.room;
+        if (window.location.href !== '/chat') {
+            navigate('/chat');
+        } else if (socket && room) {
+            socket.emit('leave_room', { username, room });
+        } else {
+            navigate('/chat');
+        }
+    };
 
     return (
         <div>
@@ -104,7 +127,7 @@ const Navbar = () => {
                         }}
                         onClose={handleCloseMenu}>
                         <MenuItem sx={{ justifyContent: 'center' }}>
-                            <Button color='inherit' sx={{ fontSize: 22, textTransform: 'none', fontFamily: 'Nunito' }} href='/chat'>
+                            <Button color='inherit' sx={{ fontSize: 22, textTransform: 'none', fontFamily: 'Nunito' }} onClick={handleChatBtnClick}>
                                 Chat
                             </Button>
                         </MenuItem>

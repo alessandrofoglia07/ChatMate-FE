@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Box, Stack } from '@mui/material';
 import Message from './message';
 
-const ChatBody = (props: { socket: any }) => {
+const ChatBody = (props: { socket: any; room: string }) => {
     const [messages, setMessages] = useState<any[]>([]);
     const { socket } = props;
 
@@ -20,6 +20,12 @@ const ChatBody = (props: { socket: any }) => {
         }
         return result;
     };
+
+    useEffect(() => {
+        return () => {
+            socket.emit('leave_room', { room: props.room });
+        };
+    });
 
     useEffect(() => {
         socket.on('receive_message', (data: any) => {

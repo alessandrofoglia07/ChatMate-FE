@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Box, Typography, Stack } from '@mui/material';
 import { useAuthUser } from 'react-auth-kit';
 
@@ -10,6 +10,9 @@ const Message = (props: { username: string; message: string; id: number }) => {
         if (props.username === auth()?.username) {
             message?.classList.remove('message-left');
             message?.classList.add('message-right');
+        } else if (props.username !== auth()?.username) {
+            message?.classList.remove('message-right');
+            message?.classList.add('message-left');
         }
     });
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import NavBar from '../components/navbar';
 import ChatBar from '../components/chatPageComponents/chatBar';
 import ChatBody from '../components/chatPageComponents/chatBody';
@@ -32,16 +32,24 @@ const ChatPage = () => {
         setRoom('');
     };
 
+    useEffect(() => {
+        socket.on('leave_room', (data: any) => {
+            setJoined(false);
+            setRoom('');
+            console.log('It works');
+        });
+    }, [socket]);
+
     return (
         <div>
-            <NavBar />
+            <NavBar socket={socket} room={room} />
             {joined ? (
                 <div id='chat'>
                     <div id='Chat-LEFT'>
                         <ChatBar room={room} socket={socket} onLeave={handleLeave} />
                     </div>
                     <div id='Chat-RIGHT'>
-                        <ChatBody socket={socket} />
+                        <ChatBody socket={socket} room={room} />
                         <ChatFooter socket={socket} room={room} />
                     </div>
                 </div>
